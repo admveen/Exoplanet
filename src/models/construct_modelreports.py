@@ -46,7 +46,7 @@ X_test = pd.read_csv(processed_data_path + 'X_test.csv', index_col=['KIC_ID', 'T
 y_test = pd.read_csv(processed_data_path + 'y_test.csv', index_col=['KIC_ID', 'TCE_num'] )
 
 #------------------------------------------------------------
-
+# SCRIPT TO AUTO-GENERATE MODEL METRICS MARKDOWN
 model_metrics_filepath = "..\\..\\reports\\model_metrics.md"
 # flatten y vectors
 y_train_flat = y_train.to_numpy().flatten()
@@ -62,6 +62,9 @@ for model in model_list:
     y_pred = model.predict(X_test)
     class_metrics = pd.DataFrame(classification_report(y_test_flat,y_pred, output_dict = True)).T
     mkdowntable = class_metrics.loc[['1','2','3'], ['precision','recall', 'f1-score']].to_markdown()
+    cfm_table = pd.DataFrame(confusion_matrix(y_test_flat, y_pred)).to_markdown()
    
     with open(model_metrics_filepath, 'a+') as f:
-        f.write("### " + str(model.steps[-1]) + "\n" + mkdowntable + "\n") 
+        f.write("### " + str(model.steps[-1]) + "\n" + "#### Classification report" + "\n" + mkdowntable + "\n")
+        f.write("#### Confusion Matrix" + "\n" + cfm_table + "\n" )
+        f.write("#### Matthews Correlation Coefficient" +"\n" + "MCC:" + str(mcc(y_test_flat, y_pred)) + "\n")
