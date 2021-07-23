@@ -63,6 +63,6 @@ class_metrics = pd.DataFrame(classification_report(y_test_flat,y_pred, output_di
 mkdowntable = class_metrics.loc[['1','2','3'], ['precision','recall', 'f1-score']].to_markdown()
    
 with open(model_metrics_filepath, 'a+') as f:
-    f.write(mkdowntable) 
+    f.write("<h1>SVC<\h1>" + mkdowntable) 
 print(model.steps[-1])
 print(class_metrics)
