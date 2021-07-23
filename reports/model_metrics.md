@@ -1,14 +1,17 @@
-## Model Metrics Report## ('exo_SVC', SVC(C=100, gamma=25))
+## Model Metrics Report
+### ('exo_SVC', SVC(C=100, gamma=25))
 |    |   precision |   recall |   f1-score |
 |---:|------------:|---------:|-----------:|
 |  1 |    0.889764 | 0.965812 |   0.92623  |
 |  2 |    0.85489  | 0.844237 |   0.84953  |
-|  3 |    0.764151 | 0.613636 |   0.680672 |## ('exo_randforest', RandomForestClassifier(max_depth=18, max_features=3, n_estimators=700))
+|  3 |    0.764151 | 0.613636 |   0.680672 |
+### ('exo_randforest', RandomForestClassifier(max_depth=18, max_features=3, n_estimators=700))
 |    |   precision |   recall |   f1-score |
 |---:|------------:|---------:|-----------:|
-|  1 |    0.923077 | 0.957265 |   0.93986  |
-|  2 |    0.858859 | 0.890966 |   0.874618 |
-|  3 |    0.803738 | 0.651515 |   0.719665 |## ('exo_xgb', XGBClassifier(base_score=0.5, booster='gbtree', colsample_bylevel=1,
+|  1 |    0.925414 | 0.954416 |   0.939691 |
+|  2 |    0.856716 | 0.894081 |   0.875    |
+|  3 |    0.794393 | 0.643939 |   0.711297 |
+### ('exo_xgb', XGBClassifier(base_score=0.5, booster='gbtree', colsample_bylevel=1,
               colsample_bynode=1, colsample_bytree=1, gamma=0, gpu_id=-1,
               importance_type='gain', interaction_constraints='',
               learning_rate=0.1, max_delta_step=0, max_depth=2,

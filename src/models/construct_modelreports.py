@@ -53,7 +53,7 @@ y_train_flat = y_train.to_numpy().flatten()
 y_test_flat = y_test.to_numpy().flatten()
 
 with open(model_metrics_filepath, 'w') as f:
-    f.write("## Model Metrics Report") 
+    f.write("## Model Metrics Report" + "\n") 
     
 # run loop to fit/predict on each model and output test metrics to file
 
@@ -64,4 +64,4 @@ for model in model_list:
     mkdowntable = class_metrics.loc[['1','2','3'], ['precision','recall', 'f1-score']].to_markdown()
    
     with open(model_metrics_filepath, 'a+') as f:
-        f.write("## " + str(model.steps[-1]) + "\n" + mkdowntable) 
+        f.write("### " + str(model.steps[-1]) + "\n" + mkdowntable + "\n") 
