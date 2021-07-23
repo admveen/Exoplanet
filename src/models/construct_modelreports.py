@@ -48,19 +48,20 @@ y_test = pd.read_csv(processed_data_path + 'y_test.csv', index_col=['KIC_ID', 'T
 #------------------------------------------------------------
 
 model_metrics_filepath = "..\\..\\reports\\model_metrics.md"
-# run loop to fit/predict on each model and output test metrics to file
-
-model = model_list[0]
+# flatten y vectors
 y_train_flat = y_train.to_numpy().flatten()
 y_test_flat = y_test.to_numpy().flatten()
-model.fit(X_train,y_train_flat)
-y_pred = model.predict(X_test)
 
-class_metrics = pd.DataFrame(classification_report(y_test_flat,y_pred, output_dict = True)).T
-
-
+with open(model_metrics_filepath, 'w') as f:
+    f.write("## Model Metrics Report") 
     
-mkdowntable = class_metrics.loc[['1','2','3'], ['precision','recall', 'f1-score']].to_markdown()
+# run loop to fit/predict on each model and output test metrics to file
+
+for model in model_list:
+    model.fit(X_train,y_train_flat)
+    y_pred = model.predict(X_test)
+    class_metrics = pd.DataFrame(classification_report(y_test_flat,y_pred, output_dict = True)).T
+    mkdowntable = class_metrics.loc[['1','2','3'], ['precision','recall', 'f1-score']].to_markdown()
    
-with open(model_metrics_filepath, 'a+') as f:
-    f.write("## " + str(model.steps[-1]) + "\n" + mkdowntable) 
+    with open(model_metrics_filepath, 'a+') as f:
+        f.write("## " + str(model.steps[-1]) + "\n" + mkdowntable) 
