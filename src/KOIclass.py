@@ -93,7 +93,7 @@ class KOIObject():
             cols_to_keep = ['TIME', 'PHASE', 'LC_INIT', 'LC_DETREND']
             self.full_datatable = lcdata.get(cols_to_keep)
         elif source == 'local':
-            self.full_datatable = pd.read_csv("..\\data\\external\\DVSeries" + str(self.kicid) + "_" + str(self.tce_index) + ".csv")
+            self.full_datatable = pd.read_csv("..\\data\\external\\DVSeries\\" + str(self.kicid) + "_" + str(self.tce_index) + ".csv")
 
         return self
 
@@ -145,7 +145,7 @@ class KOIObject():
     
     #-------------------------------DOWNLOAD DATA----------------------------------------------------
     def download_data(self):
-        dest_path = "..\\data\\external\\DVSeries" + str(self.kicid) + "_" + str(self.tce_index) + ".csv"
+        dest_path = "..\\data\\external\\DVSeries\\" + str(self.kicid) + "_" + str(self.tce_index) + ".csv"
         # load data from the remote source if the KIC/TCE data hasn't already been downloaded
         if os.path.isfile(dest_path):
             pass
