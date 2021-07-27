@@ -496,7 +496,7 @@ class KOIObject():
 
     # this plotting function plots the light curve time series for the given TCE
 
-    def plot_LC(self, lctype = 'detrend'):
+    def plot_LC(self, lctype = 'detrend', mode = 'display'):
         #options for lctype are 'initial', 'detrend'
 
         if lctype == 'initial':
@@ -515,33 +515,39 @@ class KOIObject():
             pltylabel = 'Relative Flux'
             plttitle = 'Median Detrended Light Curve'
 
-        sns.scatterplot(x = x_nam, y = y_nam, data = self.full_datatable, s = 2, label = pltlabel)
+        lcfig = sns.scatterplot(x = x_nam, y = y_nam, data = self.full_datatable, s = 2, label = pltlabel)
         plt.ylabel(pltylabel)
         plt.xlabel(pltxlabel)
         plt.title(plttitle)
         plt.legend()
-        plt.show()
+        if mode == 'display':
+            plt.show()
+        elif mode == 'save':
+            return lcfig
 
     
     # plots the phase-folded, bin-averaged light curve zoomed in on the primary transit
 
 
-    def plot_phasefolded(self, edge_color = 'yellow', marker = 'o', parity = 'all'):
+    def plot_phasefolded(self, edge_color = 'yellow', marker = 'o', parity = 'all', mode = 'display'):
         phblongseries = self.phase_binned_avg(parity = parity)
-        sns.lineplot(x = phblongseries.index, y = phblongseries.values, marker = marker, label = 'KIC: ' + str(self.kicid) + "\nTCE:" + str(self.tce_index) )
+        phasefoldfig = sns.lineplot(x = phblongseries.index, y = phblongseries.values, marker = marker, label = 'KIC: ' + str(self.kicid) + "\nTCE:" + str(self.tce_index) )
         plt.ylabel('Relative Flux'), 
         plt.xlabel('Phase (days)')
         plt.title('Phased Folded, Phased-Binned LC'  )
-        plt.show()
+        if mode == 'display':
+            plt.show()
+        elif mode == 'save':
+            return phasefoldfig
 
     # plots the phase-folded, bin-averaged light curve zoomed in on the primary transit
     #options for showing data with trend filtering or to just show trend filtered curve with no data
     # also options for plotting even or odd phase closeups
 
-    def plot_transit_closeup(self, trendonly = False, window_mult = None, parity = 'all', edge_color = 'yellow', marker = 'o', marker_size = 80):
+    def plot_transit_closeup(self, trendonly = False, window_mult = None, parity = 'all', edge_color = 'yellow', marker = 'o', marker_size = 80, mode = 'display'):
         if trendonly == False:
             phbseries = self.phase_binned_CS(parity = parity, window_mult = window_mult)
-            sns.scatterplot(x = phbseries.index, y = phbseries.values, marker = marker, edgecolor = edge_color, s = marker_size, label = 'KIC: ' + str(self.kicid) + "\nTCE:" + str(self.tce_index) )
+            transclosefig = sns.scatterplot(x = phbseries.index, y = phbseries.values, marker = marker, edgecolor = edge_color, s = marker_size, label = 'KIC: ' + str(self.kicid) + "\nTCE:" + str(self.tce_index) )
             self.trend_filter(parity = parity, window_mult = window_mult).plot(c = 'r',label = 'L2 Trend Filter')
             plt.legend()
         elif trendonly == True:
@@ -558,35 +564,45 @@ class KOIObject():
         
         plt.ylabel('Relative Flux')
         plt.xlabel('Phase (days)')
-        
-        plt.show()
+
+        if mode == 'display':
+            plt.show()
+        elif mode == 'save':
+            return transclosefig
+
 
     # simple plot with x and y axis scaled for diagnostics on primary transit close up and i'll potentially modify later to make images to be used as input features for CNN 
-    def plot_transitcloseup_scaled(self, window_mult = None):
+    def plot_transitcloseup_scaled(self, window_mult = None, mode = 'display'):
         trans_norm = self.phase_binned_CS(xynorm=True, window_mult = window_mult)
-        sns.lineplot(x = trans_norm.index, y = trans_norm.values)
+        closeupscaledplot = sns.lineplot(x = trans_norm.index, y = trans_norm.values)
         plt.ylabel('Flux Scaled to Transit Depth')
         plt.xlabel('Time [Transit Durations]')
-        plt.show()
+        if mode == 'display':
+            plt.show()
+        elif mode == 'save':
+            return closeupscaledplot
 
     
     # plots even and odd transits staggered to look at potential primary and secondary eclipse in series
-    def plot_oddandeven_transit(self):
+    def plot_oddandeven_transit(self, mode = 'display'):
 
 
-        self.evenodd_transit_stagger().plot()
+        oddevenstaggerplot = self.evenodd_transit_stagger().plot()
         
         plt.xlabel('Phase (days)')
         plt.ylabel('Relative Flux')
         plt.title('Even and Odd Transits: Phase-Bin Averaged')
         plt.annotate('Even Phase', xy = (0,0))
         plt.annotate('Odd Phase', xy = (self.period, 0))
-        plt.show()
+        if mode == 'display':
+            plt.show()
+        elif mode == 'save':
+            return oddevenstaggerplot
 
 
     # visualize potential secondary transit and 'dip' left phase, right phase, estimated peak phase location.
 
-    def plot_secondary(self):
+    def plot_secondary(self, mode = 'display'):
 
         no_primary = self.subtract_primary()
         peak_dict = self.secondarypeak_detect()
@@ -599,14 +615,17 @@ class KOIObject():
         peak_phase = peak_dict['peak_phase']
 
         no_primary.plot(linewidth=2)
-        plt.scatter(x = peak_phase, y = secondary_amp, marker = '^', s = 100, c = 'r')
+        secondaryplot = plt.scatter(x = peak_phase, y = secondary_amp, marker = '^', s = 100, c = 'r')
         plt.axvline(left_base, c = 'r', linestyle = '--')
         plt.axvline(right_base, c = 'r', linestyle = '--')
 
         plt.xlabel('Phase (days)')
         plt.ylabel('Relative Flux')
         plt.title('Secondary Peak Visualization')
-        plt.show()
+        if mode == 'display':
+            plt.show()
+        elif mode == 'save':
+            return secondaryplot
 
 
 

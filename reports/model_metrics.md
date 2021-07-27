@@ -18,17 +18,17 @@ MCC:0.7727738157051403
 #### Classification report
 |    |   precision |   recall |   f1-score |
 |---:|------------:|---------:|-----------:|
-|  1 |    0.925414 | 0.954416 |   0.939691 |
-|  2 |    0.856716 | 0.894081 |   0.875    |
+|  1 |    0.928177 | 0.957265 |   0.942496 |
+|  2 |    0.859701 | 0.897196 |   0.878049 |
 |  3 |    0.794393 | 0.643939 |   0.711297 |
 #### Confusion Matrix
 |    |   0 |   1 |   2 |
 |---:|----:|----:|----:|
-|  0 | 335 |  11 |   5 |
-|  1 |  17 | 287 |  17 |
+|  0 | 336 |  10 |   5 |
+|  1 |  16 | 288 |  17 |
 |  2 |  10 |  37 |  85 |
 #### Matthews Correlation Coefficient
-MCC:0.8049310744500148
+MCC:0.8089795599937021
 ### ('exo_xgb', XGBClassifier(base_score=0.5, booster='gbtree', colsample_bylevel=1,
               colsample_bynode=1, colsample_bytree=1, gamma=0, gpu_id=-1,
               importance_type='gain', interaction_constraints='',

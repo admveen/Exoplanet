@@ -6,11 +6,12 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 import pickle
-from copy import deepcopy
+
+import re 
 
 # this class is needed for loading the preprocessing pipeline 
 import sys
-import os
+
 import glob 
 
 # append src directory location here.
@@ -47,6 +48,7 @@ y_test = pd.read_csv(processed_data_path + 'y_test.csv', index_col=['KIC_ID', 'T
 
 #------------------------------------------------------------
 # SCRIPT TO AUTO-GENERATE MODEL METRICS MARKDOWN
+model_image_filepath = "..\\..\\reports\\figures\\"
 model_metrics_filepath = "..\\..\\reports\\model_metrics.md"
 # flatten y vectors
 y_train_flat = y_train.to_numpy().flatten()
@@ -68,3 +70,31 @@ for model in model_list:
         f.write("### " + str(model.steps[-1]) + "\n" + "#### Classification report" + "\n" + mkdowntable + "\n")
         f.write("#### Confusion Matrix" + "\n" + cfm_table + "\n" )
         f.write("#### Matthews Correlation Coefficient" +"\n" + "MCC:" + str(mcc(y_test_flat, y_pred)) + "\n")
+        
+    # let's generate confusion matrix images
+    cfmatrix_fig = plot_confusion_matrix(model, X_test, y_test_flat)
+    final_path = model_image_filepath + str(model.steps[-1][0]) + "_cfmat.png"
+    plt.title(str(model.steps[-1][0]))
+    plt.savefig(final_path)
+    plt.clf()
+    
+    # check if xgboost or randomforest. if so, output feature importances:
+    if model.steps[-1][0] == 'exo_randforest':
+        feat_cols = ['LPP_1', 'LPP_2', 'Period', 'Duration', 'even_odd_stat', 'p_secondary', 'max', 'min']
+        feature_importance_series = pd.Series(model['exo_randforest'].feature_importances_, index = feat_cols).sort_values()
+        feature_importance_series.plot(kind = 'bar')
+        plt.ylabel('Feature Importance')
+        plt.title('Random Forest: Feature Importances')
+        plt.tight_layout()
+        plt.savefig(model_image_filepath + "randforest_feature_imp.png")
+        plt.clf()
+    elif model.steps[-1][0] == 'exo_xgb':
+        feat_cols = ['LPP_1', 'LPP_2', 'Period', 'Duration', 'even_odd_stat', 'p_secondary', 'max', 'min']
+        feature_importance_series = pd.Series(model['exo_xgb'].feature_importances_, index = feat_cols).sort_values()
+        feature_importance_series.plot(kind = 'bar')
+        plt.ylabel('Feature Importance')
+        plt.title('XGBoost: Feature Importances')
+        plt.tight_layout()
+        plt.savefig(model_image_filepath + "xgb_feature_imp.png")
+        plt.clf()
+        
