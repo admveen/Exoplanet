@@ -65,6 +65,7 @@ for model in model_list:
     class_metrics = pd.DataFrame(classification_report(y_test_flat,y_pred, output_dict = True)).T
     mkdowntable = class_metrics.loc[['1','2','3'], ['precision','recall', 'f1-score']].to_markdown()
     cfm_table = pd.DataFrame(confusion_matrix(y_test_flat, y_pred)).to_markdown()
+    print(class_metrics.to_latex())
    
     with open(model_metrics_filepath, 'a+') as f:
         f.write("### " + str(model.steps[-1]) + "\n" + "#### Classification report" + "\n" + mkdowntable + "\n")
