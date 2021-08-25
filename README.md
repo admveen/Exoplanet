@@ -10,14 +10,19 @@ This project focuses on the identification of exoplanets from stellar light curv
 If the time series is long enough, the transits of the orbiting planet create light intensity dips that are observed to be periodic. An example light curve of a real exoplanet is shown below. 
 ![alt text](reports/figures/exo_multiple_transit.jpg?v=4&s=200)
 
-The vast majority of observed light curves do not have significant transiting events. A first round of statistical tests can be used to ascertain whether there are transiting events. But there are light curves with statistically significant transiting events that do not correspond to actual exoplanets. 
+The vast majority of observed light curves do not have significant transiting events. A first round of statistical tests can be used to ascertain whether there are transiting events. But there are light curves with statistically significant transiting events that do not correspond to actual exoplanets. Some of these false positives are eclipsing binary star systems. False positives from eclipsing binary systems have specific light curve characteristics -- particularly the presence of secondary smaller-amplitude dips as the brighter star eclipses a dimmer binary partner. We denote these as secondary eclipse false positives. An example of such a light curve can be seen below:
+![alt text](reports/figures/algol-curve.png?v=4&s=200)
+Other types of false positives are variable stars with periodic pulsation in their luminosity, artifacts due to polluting light from nearby stars or just plain junk. These are denoted as non-transiting phenomena false positives. <br>
 
-Data Sources
+The main task of this study is to train a classifier that can separately identify real exoplanets, secondary eclipse false positives, and non-transiting false positives from an analysis of the light curves. <br>
+
+Data Sources 
 ------------
 Metadata and extracted parameters for Kepler Objects of Interest were taken from the Kepler cumulative table via API requests to the NASA Exoplanet archive: <br>
-https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative'
+https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative' <br>
 Light curve data was taken from the Minkulski Archive for Space Telescopes (MAST) via their exoplanet mission API (the exoMAST API). Documentation on interacting with the API can be found here. <br>
-https://exo.mast.stsci.edu/docs/
+https://exo.mast.stsci.edu/docs/ <br>
+
 
 Project Organization
 ------------
