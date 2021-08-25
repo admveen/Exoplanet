@@ -19,9 +19,11 @@ Project Organization
     ├── models             <- contains three best models (pickled) found by hyperparameter tuning.
     │   └── preprocessing  <- contains pickled preprocessing/data transformation pipeline.
     |
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
+    ├── notebooks          <- Jupyter notebooks. Naming convention is Exo_DSMstep_partnumber
+    |                         DSMstep could DataWrangling, EDA, Preprocessing, or Modeling
+    |                         partnumber is relevant when a given DSM step is split into parts.
+    │                         
+    │                         
     │
     ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
     │
