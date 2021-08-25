@@ -18,7 +18,9 @@ Other types of false positives are variable stars with periodic pulsation in the
 
 Data Sources 
 ------------
-Metadata and extracted parameters for Kepler Objects of Interest were taken from the Kepler cumulative table via API requests to the NASA Exoplanet archive: <br>
+We used light curves from the Kepler mission. The Kepler space telescope observed approximately 500,000 stars in a portion of the Milky Way galaxy from 2009-2018. A small portion of the stars measured had light curves with statistically significant events. These objects were flagged and entered into a Kepler Object of Interest (KOI) catalog for further analysis. We focus on these KOIs for our classification task
+
+Metadata and extracted parameters for KOIs were taken from the Kepler cumulative table via API requests to the NASA Exoplanet archive: <br>
 https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative' <br>
 Light curve data was taken from the Minkulski Archive for Space Telescopes (MAST) via their exoplanet mission API (the exoMAST API). Documentation on interacting with the API can be found here. <br>
 https://exo.mast.stsci.edu/docs/ <br>
@@ -28,6 +30,10 @@ Summary
 A high level description of the steps we followed in data wrangling, EDA, preprocessing, and modeling/evaluation can be found in the final report [here](https://github.com/admveen/Exoplanet/blob/master/reports/final_report.pdf).
 
 A slide deck containing much of this information is also [here](https://github.com/admveen/Exoplanet/blob/master/reports/presentation/presentation.pdf).
+
+Further detail of the analysis can be found in the notebooks and in certain relevant source files:
+
+<h2>I. Data wrangling  <h2 />
 
 Project Organization
 ------------
