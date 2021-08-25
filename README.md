@@ -1,6 +1,8 @@
 Exoplanet Discovery using the Light Curve Transit Method
 ==============================
 
+In 1992 astronomers discovered a periodic set of dips modulating the emission from a pulsating neutron star. The source of these dips was identified as two planetary bodies orbiting the neutron star. The possibility of discovering and examining planets that do not orbit our sun was a compelling one. Some relevant reasons include the desire to find Earth-similar planets that could host extraterrestrial life, or to understand the distribution of the types of planets and planetary systems that exist and where our own solar system fits in this schema.
+
 
 
 Project Organization
@@ -13,28 +15,6 @@ Project Organization
     │   ├── interim        <- Intermediate data that has been transformed.
     │   └── processed      <- The final, canonical data sets for modeling.
     │   
-<<<<<<< HEAD
-    │
-    ├── docs               <- Contains the initial project proposal.
-    │
-    ├── models             <- contains three best models (pickled) found by hyperparameter tuning.
-    │   └── preprocessing  <- contains pickled preprocessing/data transformation pipeline.
-    |
-    ├── notebooks          <- Jupyter notebooks. Naming convention is Exo_DSMstep_partnumber
-    |                         DSMstep <--> DataWrangling, EDA, Preprocessing, or Modeling
-    |                         partnumber <--> relevant when a given DSM step is split into parts.
-    │                         
-    ├── references         <- Journal references
-    │
-    ├── reports            <- Presentation and final report
-    │   ├── figures        <- Generated graphics and figures to be used in reporting
-    |   ├── presentation   <- Presentation + beamer LateX generating files
-    |   |    └── presentation.pdf   <- Presentation created by beamer LateX
-    |   |
-    |   ├──final_report.pdf <-- Final report. 
-    |   └──model_metrics.md <-- Markdown containing classification reports for best models. 
-    │
-=======
     │
     ├── docs               <- Contains the initial project proposal.
     │
@@ -59,7 +39,6 @@ Project Organization
     ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
     │                         generated with `pip freeze > requirements.txt`
     │
->>>>>>> 9310433c0aaf82ad36d41f06672ada4c67d899bc
     ├── src                <- Source code for use in this project.
     │   ├── __init__.py    <- Makes src a Python module
     │   ├── KOIclass.py    <- Contains custom-built class that grapples with the ExoMAST API,
