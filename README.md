@@ -26,7 +26,7 @@ https://exo.mast.stsci.edu/docs/ <br>
 Summary 
 ------------
 A high level description of the steps we followed in data wrangling, EDA, preprocessing, and modeling/evaluation can be found in the final report:
-![alt text](reports/figures/final_report.pdf)
+![alt text](reports/final_report.pdf)
 
 
 Project Organization
