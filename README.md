@@ -14,7 +14,7 @@ The vast majority of observed light curves do not have significant transiting ev
 ![alt text](reports/figures/algol-curve.png?v=4&s=200)
 Other types of false positives are variable stars with periodic pulsation in their luminosity, artifacts due to polluting light from nearby stars or just plain junk. These are denoted as non-transiting phenomena false positives. <br>
 
-The main task of this study is to train a classifier that can separately identify real exoplanets, secondary eclipse false positives, and non-transiting false positives from an analysis of the light curves. <br>
+**The main task of this study is to train a classifier that can separately identify real exoplanets, secondary eclipse false positives, and non-transiting false positives from an analysis of the light curves.** <br>
 
 Data Sources 
 ------------
@@ -22,6 +22,11 @@ Metadata and extracted parameters for Kepler Objects of Interest were taken from
 https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative' <br>
 Light curve data was taken from the Minkulski Archive for Space Telescopes (MAST) via their exoplanet mission API (the exoMAST API). Documentation on interacting with the API can be found here. <br>
 https://exo.mast.stsci.edu/docs/ <br>
+
+Summary 
+------------
+A high level description of the steps we followed in data wrangling, EDA, preprocessing, and modeling/evaluation can be found in the final report:
+![alt text](reports/figures/final_report.pdf)
 
 
 Project Organization
