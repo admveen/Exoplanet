@@ -13,28 +13,6 @@ Project Organization
     │   ├── interim        <- Intermediate data that has been transformed.
     │   └── processed      <- The final, canonical data sets for modeling.
     │   
-<<<<<<< HEAD
-    │
-    ├── docs               <- Contains the initial project proposal.
-    │
-    ├── models             <- contains three best models (pickled) found by hyperparameter tuning.
-    │   └── preprocessing  <- contains pickled preprocessing/data transformation pipeline.
-    |
-    ├── notebooks          <- Jupyter notebooks. Naming convention is Exo_DSMstep_partnumber
-    |                         DSMstep <--> DataWrangling, EDA, Preprocessing, or Modeling
-    |                         partnumber <--> relevant when a given DSM step is split into parts.
-    │                         
-    ├── references         <- Journal references
-    │
-    ├── reports            <- Presentation and final report
-    │   ├── figures        <- Generated graphics and figures to be used in reporting
-    |   ├── presentation   <- Presentation + beamer LateX generating files
-    |   |    └── presentation.pdf   <- Presentation created by beamer LateX
-    |   |
-    |   ├──final_report.pdf <-- Final report. 
-    |   └──model_metrics.md <-- Markdown containing classification reports for best models. 
-    │
-=======
     │
     ├── docs               <- Contains the initial project proposal.
     │
@@ -59,7 +37,6 @@ Project Organization
     ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
     │                         generated with `pip freeze > requirements.txt`
     │
->>>>>>> 9310433c0aaf82ad36d41f06672ada4c67d899bc
     ├── src                <- Source code for use in this project.
     │   ├── __init__.py    <- Makes src a Python module
     │   ├── KOIclass.py    <- Contains custom-built class that grapples with the ExoMAST API,
