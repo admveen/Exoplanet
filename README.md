@@ -32,15 +32,17 @@ A high level description of the steps we followed in data wrangling, EDA, prepro
 A slide deck containing much of this information is also [here](https://github.com/admveen/Exoplanet/blob/master/reports/presentation/presentation.pdf).
 
 Further detail of the analysis can be found in the notebooks and in certain relevant source files:
-<h3>I. The KOIclass Custom Class  <h3 />
+### I. The KOIclass Custom Class  
 Much of the details of our light curve preprocessing are in this class. The class instantiates a KOIObject which can load data and metadata for a given KOI given the star ID and transit crossing ID. Most interaction with the data APIs go through this class. The class also has subroutines for denoising the data, detrending, phase folding and cycle averaging, trend filtering, and automatically constructing relevant features from the data that are then passed onto interim data preprocessing and ML modeling. The class also has some time series plotting functions.
-<h3>II. Data wrangling  <h3 />
+### II. Data wrangling 
 The first step of data wrangling involves cleaning the cumulative table, figuring out which KOIs belong to which class, keeping relevant KOIs and metadata, and then downloading the light curves. <br>
 [Data Wrangling Part 1]https://github.com/admveen/Exoplanet/blob/master/notebooks/Exo_DataWrangling_Part1.ipynb
 
 In the second data wrangling step, we construct the intermediate feature matrix from the metadata and light curves of the KOIs wrangled from the previous step. <br>
 [Data Wrangling Part 2]https://github.com/admveen/Exoplanet/blob/master/notebooks/Exo_DataWrangling_Part2.ipynb
-<h3>III. Data wrangling  <h3 />
+### III. Exploratory Data Analysis (EDA)
+
+
 Project Organization
 ------------
 
