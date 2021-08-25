@@ -33,7 +33,7 @@ A slide deck containing much of this information is also [here](https://github.c
 
 Further detail of the analysis can be found in the notebooks and in certain relevant source files:
 
-<h2>I. Data wrangling  <h2 />
+<h3>I. Data wrangling  <h3 />
 
 Project Organization
 ------------
