@@ -5,18 +5,18 @@ Introduction
 ------------
 In 1992 astronomers discovered a periodic set of dips modulating the emission from a pulsating neutron star. The source of these dips was identified as two planetary bodies orbiting the neutron star. The possibility of discovering and examining planets that do not orbit our sun was a compelling one. Some relevant reasons include the desire to find Earth-similar planets that could host extra-terrestrial life, or to understand the distribution of the types of planets and planetary systems that exist and where our own solar system fits in this schema.
 
-This project focuses on the identification of exoplanets from stellar light curve data using the transit detection method. Stellar light curves are time series of the measured intensity of a target star. Exoplanets are too small to see directly by telescope but an exoplanet transiting into the line of sight between the target star and space telescope will cause a small dip in the measured stellar intensity. <br>
+This project focuses on the identification of exoplanets from stellar light curve data using the transit detection method. Stellar light curves are time series of the measured intensity of a target star. Exoplanets are too small to see directly by telescope but an exoplanet transiting into the line of sight between the target star and space telescope will cause a small dip in the measured stellar intensity. 
 ![alt text](reports/figures/transit_illustration.jpg?v=4&s=200)
-If the time series is long enough, the transits of the orbiting planet create light intensity dips that are observed to be periodic. An example light curve of a real exoplanet is shown below. <br>
+If the time series is long enough, the transits of the orbiting planet create light intensity dips that are observed to be periodic. An example light curve of a real exoplanet is shown below. 
 ![alt text](reports/figures/exo_multiple_transit.jpg?v=4&s=200)
 
 The vast majority of observed light curves do not have significant transiting events. A first round of statistical tests can be used to ascertain whether there are transiting events. But there are light curves with statistically significant transiting events that do not correspond to actual exoplanets. 
 
 Data Sources
 ------------
-Metadata and extracted parameters for Kepler Objects of Interest were taken from the Kepler cumulative table via API requests to the NASA Exoplanet archive:
-https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nphnstedAPI?table=cumulative'
-Light curve data was taken from the Minkulski Archive for Space Telescopes (MAST) via their exoplanet mission API (the exoMAST API). Documentation on interacting with the API can be found here.
+Metadata and extracted parameters for Kepler Objects of Interest were taken from the Kepler cumulative table via API requests to the NASA Exoplanet archive: <br>
+https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative'
+Light curve data was taken from the Minkulski Archive for Space Telescopes (MAST) via their exoplanet mission API (the exoMAST API). Documentation on interacting with the API can be found here. <br>
 https://exo.mast.stsci.edu/docs/
 
 Project Organization
