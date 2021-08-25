@@ -1,0 +1,561 @@
+\documentclass{beamer}
+\usetheme{Warsaw}
+\usepackage{caption}
+\usepackage{tikz}
+\usepackage{adjustbox}
+\usetikzlibrary{arrows.meta, calc, quotes, tikzmark}
+\usetikzlibrary{shapes.geometric, arrows, chains, positioning}
+
+\setbeamerfont{caption}{series=\normalfont,size=\fontsize{7}{9}} 
+
+
+
+\title[Springboard Capstone 2]{The Hunt for Exoplanets} 
+\subtitle{Vetting Kepler Light Curves}
+
+\author{Praveen Gowtham} % Your name
+\institute[UCLA] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+
+\date{} % Date, can be changed to a custom date
+
+
+\begin{document}
+
+% Define block styles
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+text width=5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+minimum height=2em]
+	
+	\begin{frame}
+		\titlepage % Print the title page as the first slide
+	\end{frame}
+
+\begin{frame}{Motivations}
+	\begin{figure}
+		\includegraphics[scale=0.35]{pia17999_in_pj}
+		\caption{An artist’s concept of Kepler-186f, the first validated Earth-size planet to orbit a distant star in the “habitable zone.”}
+	\end{figure}
+
+
+\end{frame}
+
+\begin{frame}{Motivations}
+	\begin{columns}
+		\tikzset{box/.style={inner xsep=0pt}}
+		\begin{column}{0.4\textwidth}
+		
+		  \begin{itemize}
+			\item Search for habitable planets.
+			\item The types and distribution of planets and planetary systems in Milky Way.
+			\item Where does our solar system fit in?
+		\end{itemize}	
+		\end{column}
+	\begin{column}{0.6\textwidth}
+		\begin{figure}
+			\includegraphics[scale=0.053]{planetseverywhere}
+					\caption{Artist depiction of planetary system distribution in sector of Milky Way galaxy based off of exoplanetary data.}
+		\end{figure}
+
+	\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Detection technique: Light curve transit crossing}
+	Light flux time series from star.  Periodic dips in light flux could be transiting exoplanet.
+	
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+				\includegraphics[scale=0.11]{transit_illustration}
+				\caption{Schematic of transit detection via space telescope photometry.}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+				\includegraphics[scale=0.1]{exo_multiple_transit}
+				\caption{Light curve with periodic transits from exoplanet HAT-P-7b.}
+			\end{figure}
+	\end{column}
+
+		
+	\end{columns}	
+\end{frame}
+
+\begin{frame}{Kepler mission (2009-2018)}
+	\begin{columns}
+		\begin{column}{0.4\textwidth}
+			\begin{itemize}
+				\item Kepler space telescope: dedicated photometry scanning a section of Milky Way.
+				\item Photometry on $>$ 500,000 stars.
+				\item $\approx$ 2,500 confirmed exoplanets by Kepler via light curve transit method.
+			\end{itemize}	
+		\end{column}	
+		\begin{column}{0.6\textwidth}
+			\begin{figure}
+				\includegraphics[scale=0.09]{kepler_spacetelescope}
+				\caption{Kepler Space Telescope.}
+			\end{figure}
+		\end{column}
+			
+		\end{columns}	
+\end{frame}
+
+\begin{frame}{The problem}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{itemize}[<+-| alert@+>]
+				\item Transit or noise? Some processing/statistics required.
+				\item False positives (FPs).
+				\begin{itemize}
+					\item Secondary eclipse FPs
+					\item Non-transiting Phenomena (NTP FPs)
+				\end{itemize}
+				\item Goal: Real exoplanets vs. different types of FPs
+			\end{itemize}	
+		\end{column}	
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+						\includegraphics<1>[width=5.75cm]{exo_multiple_transit}
+						\includegraphics<3>[width=5.75cm]{algol-curve}
+						\visible<3>{\caption{Light curve from eclipsing binary star system (Algol A/B System)}}
+						\includegraphics<4>[width=5.75cm]{phasefolded_ntp_ex2}	
+						\visible<4>{\caption{Single oscillation cycle from pulsating star.}}		
+
+			\end{figure}
+		\end{column}
+		
+	\end{columns}	
+\end{frame}
+
+\begin{frame}{Kepler Data Validation Stream}
+	Kepler mission uses an automated preprocessing and vetting pipeline.
+\begin{itemize}
+	\item Detect potentials: periodic statistically significant dip events. These are \textbf{Kepler Objects of Interest (KOIs)}.
+	\item Basic preprocessing of KOI light curves.
+\end{itemize} 
+\begin{block}{Kepler pipeline}
+\begin{adjustbox}{max totalsize={.9\textwidth}{.7\textheight},center}
+	
+    \begin{tikzpicture}[>=latex']
+	
+	\node [block] (start) {Kepler light curve \\ from pixel image};
+	\node [block, right =2cm of start] (preprocess) {Whitening \\ + \\ detrend };
+	\node [block, right =2cm of preprocess] (statdetector) {Periodic \\ event \\ detection};
+	\node [block, right =2cm of statdetector] (otsu) {KOI catalog};
+	\
+	
+	
+	%% paths
+	\path[draw,->]
+	(start) edge (preprocess)
+	(preprocess) edge (statdetector)
+	(statdetector) edge (otsu)
+	;
+\end{tikzpicture}
+		
+\end{adjustbox}
+\end{block}
+\textbf{Focus on classification of KOIs}
+\end{frame}	
+	
+
+\begin{frame}{Problem specification}
+	\begin{block}{Label encoding + data breakdown}
+		\begin{adjustbox}{max totalsize={.9\textwidth}{.7\textheight},center}
+			
+			\begin{tabular}{|c|c|c|c|}
+			\hline
+			Class name & Confirmed Planet  & Secondary Eclipse FP   &  NTP FP  \\
+			\hline
+			Target Label & 1  & 2 & 3    \\
+			\hline
+			Count & 2333 & 2140 & 880 \\
+			\hline
+			
+		\end{tabular}
+	
+	\end{adjustbox}
+	\end{block}
+	Multi-label classification problem from light curves of KOIs.
+
+\begin{itemize}
+\item \textbf{Key challenge}: Light curve $\rightarrow$ processed light curve $\rightarrow$ relevant features
+\item Train classifier on constructed features/label mapping
+\end{itemize}
+
+	
+\end{frame}
+
+\begin{frame}{Light curve processing: phase-folding + averaging}
+\begin{columns}
+	\begin{column}{0.5\textwidth}
+	\begin{figure}
+		\includegraphics[scale=0.35]{lc_detrend_secondaryFP_ex1}
+		\caption{Whitened, detrended light curve.}
+	\end{figure}
+	\end{column}
+	\begin{column}{0.5\textwidth}
+	\begin{figure}
+	\includegraphics[scale=0.35]{phasefolded_secondaryFP_ex1}
+	\caption{Phase-folded and bin averaged (secondary eclipse FP).}
+	\end{figure}
+	\end{column}
+
+\end{columns}	
+\end{frame}
+
+\begin{frame}{Constructed Features}
+All features (except period) constructed from phase-folded, bin-averaged light curves. 
+\vfill
+\begin{adjustbox}{max totalsize={.9\textwidth}{.7\textheight},center}
+	
+		\begin{tabular}{|c|c|}
+			\hline
+			Period &  TCE period (days). \\
+			\hline
+			Duration & TCE duration (hours). \\
+			\hline
+			EOS & Even-odd statistic for secondary eclipse detection. \\
+			\hline
+			WSS & Weak secondary statistic  \\
+			\hline
+			min & Almost always corresponds to the depth of the primary transit.  \\
+			\hline
+			max & Maximum value in phase-folded/bin-averaged light curve. \\
+			\hline
+			LCBIN\_0 - LCBIN\_140 & 141 points of the xy-normalized primary transit close-ups  \\
+			\hline
+		\end{tabular}
+
+
+
+\end{adjustbox}
+
+
+\end{frame}
+
+\begin{frame}{Weak Secondary Statistic (WSS)}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+		\begin{figure}
+		\includegraphics[scale=0.35]{phasefolded_secondaryFP_ex1}
+		\caption{Whitened, detrended light curve.}
+	\end{figure}
+	\end{column}
+	\begin{column}{0.5\textwidth}
+		\begin{figure}
+	\includegraphics[scale=0.35]{secondarypeakonly_secondaryFP_ex1}
+	\caption{Primary transit subtracted.}
+\end{figure}
+\end{column}
+\end{columns}
+\begin{block}{WSS Test}
+	\begin{itemize}
+		\item Subtract primary transit.
+		\item Peak find and extract max amplitude peak (dip) + supports.
+		\item Probability that amplitude (or more extreme) generated by Gaussian noise floor. 
+	\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Even Odd Statistic (EOS)}
+Sometimes primary + secondary: similar amplitudes. Secondary at exactly half period. \\
+\textbf{Problem: primary and secondary registered as same event by Kepler data validation.}
+	\begin{columns}
+	\begin{column}{0.5\textwidth}
+		\begin{figure}
+			\includegraphics[scale=0.35]{lc_detrend_secondaryFP_ex2}
+			\caption{Primary and secondary transit amplitudes similar.}
+		\end{figure}
+	\end{column}
+	\begin{column}{0.5\textwidth}
+		\begin{figure}
+			\includegraphics[scale=0.35]{evenoddstagger_secondaryFP_ex2}
+			\caption{Alternate cycles binned into separate groups (even/odd). Each phase-folded, averaged.}
+		\end{figure}
+	\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Even Odd Statistic (EOS)}
+
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+				\includegraphics[scale=0.35]{lc_detrend_secondaryFP_ex2}
+				\caption{Primary and secondary transit amplitudes similar.}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+				\includegraphics[scale=0.35]{evenoddstagger_secondaryFP_ex2}
+				\caption{Alternate cycles binned into separate groups (even/odd). Each phase-folded, averaged.}
+			\end{figure}
+		\end{column}
+	\end{columns}
+\begin{block}{EOS Test}
+	\begin{itemize}
+	\item Two sample t-test on even vs. odd phase transit depths.
+	\item Extract p-value for significance of mean difference.
+	\end{itemize}
+	
+\end{block}
+\end{frame}
+
+\begin{frame}{LCBIN Features}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{itemize}
+				\item Primary transit close-up: $\pm 2$ transit durations.
+				\item XY-rescaled, resampled / binned to 141 points fixed length.
+				\item \textbf{Shape difference:} U-shape vs. V-shape 
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\includegraphics[scale=0.375]{rescalexy_CP}
+			\includegraphics[scale=0.375]{rescalexy_secondaryFP}
+		\end{column}
+	\end{columns}
+	
+\end{frame}
+
+\begin{frame}{Feature Preprocessing Pipeline }
+	
+\begin{block}{Scikit-learn custom transformers + pipeline integration}
+
+\begin{adjustbox}{max totalsize={.9\textwidth}{.7\textheight},center}
+	
+	\begin{tikzpicture}[auto]
+		
+		\node [block] (start) {WSS and EOS};
+		\node [block, below = 1 cm of start] (start2) {LCBIN 0 to LCBIN 140};
+		\node [block, below = 1 cm of start2] (start3) {Other features};
+		\node [block, right =2cm of start] (preprocess1) {Log10 + Abs + Sqrt Transform};
+				\node [block, right =2cm of start2] (preprocess2) {Dimensional reduction };
+		\node [block, right =2cm of preprocess2] (normalizer) {Min/Max Normalizer};
+		\node [block, right =2cm of normalizer] (output){Final Feature Matrix};
+		
+		
+		
+		%% paths
+		\path[draw,->]
+		(start) edge (preprocess1)
+		(start2) edge (preprocess2)
+		(preprocess2) edge (normalizer)
+		(normalizer) edge (output)
+		;
+		
+		\path [line] (preprocess1) -| (normalizer);
+		\path [line] (start3) -| (normalizer);
+	\end{tikzpicture}
+	
+\end{adjustbox}
+
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Statistical EDA: Secondary Eclipse Test Features}
+\begin{columns}
+\begin{column}{0.5\textwidth}		
+	\begin{figure}
+	\includegraphics[scale = 0.3]{psec_hist}	
+	\end{figure}
+
+	\begin{figure}
+	\includegraphics[scale = 0.21]{psec_class_diff}			
+	\end{figure}
+\end{column}
+\hspace{-20pt}
+\vrule{}
+\begin{column}{0.5\textwidth}
+		\begin{figure}
+		\includegraphics[scale = 0.3]{evenodd_hist}			
+	\end{figure}
+	\begin{figure}
+	\includegraphics[scale = 0.21]{evenodd_class_diff.png}			
+\end{figure}
+\end{column}
+
+\end{columns}
+
+\end{frame}
+
+\begin{frame}{Some other non-LCBIN features}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{itemize}
+				\item 'Period' good for class 3 (NTPs) selection.
+				\item 'Min' feature / transit depth: exoplanets vs class 2 (secondary FPs)
+				\item 'Duration', 'max': helps exoplanet vs. FP separation
+			\end{itemize}
+		
+		\end{column}
+		\begin{column}{0.5\textwidth}
+	\begin{figure}
+		\includegraphics[scale = 0.3]{ecdf_Period}			
+	\end{figure}
+	\begin{figure}
+	\includegraphics[scale = 0.3]{ecdf_min}			
+\end{figure}
+\end{column}
+	\end{columns}
+	
+\end{frame}
+
+
+\begin{frame}{Locality Preserving Projections (LPP)}
+	\begin{block}{LPP: Dimensional reduction technique}
+		Map to low dimension maintains closeness of objects that are close in high dimensions. Reduce 141-D LCBIN to 2D space.
+	\end{block}
+\begin{columns}
+	\begin{column}{0.5\textwidth}
+		\includegraphics[scale=0.25]{rescalexy_CP} \tikzmark{b}
+		\includegraphics[scale=0.25]{rescalexy_secondaryFP} 
+	\end{column} \tikzmark{f}
+	\begin{column}{0.5\textwidth}  
+		\includegraphics[scale=0.3]{lppjointplot}
+
+	\end{column}  
+\end{columns}
+
+    \begin{tikzpicture}[overlay,remember picture]
+	\draw[very thick, -Stealth]         ($({pic cs:b})+(1ex,1ex)$)
+	to [bend left, "LPP"]  ($({pic cs:f})+(1ex,+1em)$);
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Class separation in LPP space}
+	\begin{figure}
+	\includegraphics[scale=0.3]{lpp_hexbinplot}
+	\caption{Hexbin count distribution for each class in 2D LPP space.}
+	
+	\end{figure}
+Distinction between class 1 (exoplanets) and FPs. Outliers dominated by NTP FPs.
+\end{frame}
+
+
+\begin{frame}{Modeling Pipeline}
+\begin{block}{Hyperparameter tuning: CV grid search}	
+	\begin{itemize}
+		\item 75-15 train/hold-out set. 
+		\item Scikit-learn full pipeline:
+		
+			\begin{adjustbox}{max totalsize={.9\textwidth}{.7\textheight},{margin= 3mm}, center}
+			
+			\begin{tikzpicture}[auto]
+				
+				
+				\node [block] (start) {Pre-process pipeline};
+				\node [block, right =2cm of start] (model) {Classifier model};
+				\
+				
+				
+				%% paths
+				\path[draw,->]
+				(start) edge (model)
+				
+				;
+			\end{tikzpicture}
+			
+		\end{adjustbox}
+	\item 5-fold cross validation: 75-15 splits on train set. 
+	\item Eval. metric: f1-score micro-averaged across classes.
+	\item Pipeline + CV fit: avoids data leakage.
+		
+	\end{itemize}
+	
+\end{block}
+
+\begin{block}{Classifier Models + Hyperparameters}
+\textbf{Random Forest}: max\_depth, max\_features, n\_estimators \\ 
+\textbf{RBF-Kernelized Soft-Margin SVM}: C, gamma \\ 
+\textbf{XGBoost (stumps)}:  learning\_rate, n\_estimators
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Best Performing Model}
+		\begin{itemize}
+			\item Final evaluation of tuned models on hold-out set.
+			\item XGBoost using decision stumps performs the best.
+			\item Optimal hyperparameters:
+			\begin{itemize}
+				\item Learning rate: 0.1
+				\item Number of estimators: 1000
+			\end{itemize}
+		\end{itemize}
+	
+	\begin{block}{XGBoost performance on hold-out}
+		\centering
+		\begin{tabular}{|l|r|r|r|r|}
+			\hline 
+			class &  precision &    recall &  f1-score &    support \\ \hline
+			
+			1            &   0.943820 &  0.957265 &  0.950495 &  351.00000 \\ \hline
+			2            &   0.867868 &  0.900312 &  0.883792 &  321.00000 \\ \hline
+			3            &   0.773913 &  0.674242 &  0.720648 &  132.00000 \\ \hline
+ 
+			
+		\end{tabular}
+	\end{block}
+
+\end{frame}
+\begin{frame}{Performance Summary + Feature Evaluation}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{itemize}
+				\item Exoplanet vs. FP: excellent.
+				\item Secondary eclipse FP: pretty good.
+				\item NTP FPs: some confusion w/ secondary FPs.
+			\end{itemize}
+		\end{column}
+
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+					\includegraphics[scale = 0.3]{exo_xgb_cfmat}
+			\end{figure}
+
+		\end{column}
+	
+	\end{columns}
+\begin{columns}
+	\begin{column}{0.5\textwidth}
+		\begin{itemize}
+			\item Feature importances on similar scale.
+			\item Different tree ensemble methods: ordering robust.
+		\end{itemize}
+	\end{column}
+	\begin{column}{0.5\textwidth}
+	\begin{figure}
+		\includegraphics<1>[scale = 0.25]{xgb_feature_imp}
+		\includegraphics<2>[scale = 0.25]{randforest_feature_imp}
+	\end{figure}
+	\end{column}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}{Future Directions}
+	\begin{columns}
+	\begin{column}{0.5\textwidth}
+	\begin{itemize}
+		\item Start vetting from raw data. End-to-end pipeline.
+		\item New missions, similar mission data validation streams.
+		\item Model adaptation to new missions.
+
+	\end{itemize}	
+	\end{column}
+	\begin{column}{0.5\textwidth}
+		\begin{figure}
+		\includegraphics[scale = 0.5]{TESS}
+		\caption{Transiting Exoplanet Survey Satellite (TESS)}
+	\end{figure}
+	\end{column}
+\end{columns}
+\end{frame}
+\end{document}
