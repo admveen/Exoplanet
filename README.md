@@ -1,7 +1,7 @@
-NASA_ExoPlanet
+Exoplanet Discovery using the Light Curve Transit Method
 ==============================
 
-Exoplanet classification using transit signatures.
+
 
 Project Organization
 ------------
