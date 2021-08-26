@@ -55,9 +55,11 @@ Here we build the initial part of a scikit-learn pipeline that transforms variou
 [Preprocessing notebook](https://github.com/admveen/Exoplanet/blob/master/notebooks/Exo_Preprocessing.ipynb)
 
 ### V. Modeling
-The data was split into a 85-15 train/test set. We tried out random forests, RBF kernelized soft margin SVMs, and gradient boosting classifiers (XGBoost). The models were appended to the preprocessing pipeline and we performed a 5-fold RandomizedSearchCV hyperparameter scan (85-15 train/validation split) with the entire pipeline model on the training set. We fined tuned further with GridSearchCV to find optimal hyperparameters. This was done for each type of classifiers. The best models for each class were then evaluated on the test. 
+The data was split into a 85-15 train/test set. We tried out random forests, RBF kernelized soft margin SVMs, and gradient boosting classifiers (XGBoost). The models were appended to the preprocessing pipeline and we performed a 5-fold RandomizedSearchCV hyperparameter scan (85-15 train/validation split) with the entire pipeline model on the training set. We fined tuned further with GridSearchCV to find optimal hyperparameters. This was done for each type of classifier. The best models for each class were then evaluated on the test. 
 
 [Modeling Notebook](https://github.com/admveen/Exoplanet/blob/master/notebooks/Exo_Modeling.ipynb)
+
+[Model Evaluation Report](https://github.com/admveen/Exoplanet/blob/master/reports/model_metrics.md)
 
 Project Organization
 ------------
