@@ -119,6 +119,9 @@ Project Organization
     │
     └── 
 
+Acknowledgements
+------------
+Special thanks to my Springboard mentor Max Sop who was a constant source of encouragement during this project.
 
 --------
 
