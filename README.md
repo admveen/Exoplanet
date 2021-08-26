@@ -36,26 +36,29 @@ Further detail of the analysis can be found in the notebooks and in certain rele
 Much of the details of our light curve preprocessing are in this class. The class instantiates a KOIObject which can load data and metadata for a given KOI given the star ID and transit crossing ID. Most interaction with the data APIs go through this class. The class also has subroutines for denoising the data, detrending, phase folding and cycle averaging, trend filtering, and constructing relevant features from the data that are then passed onto interim data preprocessing and ML modeling. The class also has some time series plotting functions.
 ### II. Data wrangling 
 The first step of data wrangling involves cleaning the cumulative table, figuring out which KOIs belong to which class, keeping relevant KOIs and metadata, and then downloading the light curves. <br>
-[Data Wrangling Part 1](https://github.com/admveen/Exoplanet/blob/master/notebooks/Exo_DataWrangling_Part1.ipynb)
+[Data Wrangling Part 1 notebook](https://github.com/admveen/Exoplanet/blob/master/notebooks/Exo_DataWrangling_Part1.ipynb)
 
 In the second data wrangling step, we construct the intermediate feature matrix from the metadata and light curves of the KOIs wrangled from the previous step. <br>
-[Data Wrangling Part 2](https://github.com/admveen/Exoplanet/blob/master/notebooks/Exo_DataWrangling_Part2.ipynb)
+[Data Wrangling Part 2 notebook](https://github.com/admveen/Exoplanet/blob/master/notebooks/Exo_DataWrangling_Part2.ipynb)
 ### III. Exploratory Data Analysis (EDA)
 In the first step of EDA, we visualize raw light curves across the different classes.  We also visualize differences in the cycle-averaged light curves across the different classes, differences in the shapes of the transits, etc.
 
-[EDA Part 1](https://github.com/admveen/Exoplanet/blob/master/notebooks/Exo_EDA_Part1.ipynb)
+[EDA Part 1 notebook](https://github.com/admveen/Exoplanet/blob/master/notebooks/Exo_EDA_Part1.ipynb)
 
 The second part of the EDA is statistical EDA. Here, we focus more on the distributions of the time-series extracted features, interactions between features, and assessing the viability of dimensionality reduction in certain feature subsets.
 
-[EDA Part 2](https://github.com/admveen/Exoplanet/blob/master/notebooks/EXO_EDA_Part2.ipynb)
+[EDA Part 2 notebook](https://github.com/admveen/Exoplanet/blob/master/notebooks/EXO_EDA_Part2.ipynb)
 
 ### IV. Preprocessing
 Here we build the initial part of a scikit-learn pipeline that transforms various subsets of the data in different ways, performs dimensionality reduction on a portion of the features, and then min-max normalizes the resultant feature set. We build custom scikit-learn transformers and also make use of scikit-learn's column transformer to build the preprocessing pipeline. We pickle the composite transformer pipeline for integration into the modeling phase.
 
-[Preprocessing](https://github.com/admveen/Exoplanet/blob/master/notebooks/Exo_Preprocessing.ipynb)
+[Preprocessing notebook](https://github.com/admveen/Exoplanet/blob/master/notebooks/Exo_Preprocessing.ipynb)
 
 ### V. Modeling
-Sup.
+The data was split into a 85-15 train/test set. We tried out random forests, RBF kernelized soft margin SVMs, and gradient boosting classifiers (XGBoost). The models were appended to the preprocessing pipeline and we performed a 5-fold RandomizedSearchCV hyperparameter scan (85-15 train/validation split) with the entire pipeline model on the training set. We fined tuned further with GridSearchCV to find optimal hyperparameters. This was done for each type of classifiers. The best models for each class were then evaluated on the test. 
+
+[Modeling Notebook](https://github.com/admveen/Exoplanet/blob/master/notebooks/Exo_Modeling.ipynb)
+
 Project Organization
 ------------
 
