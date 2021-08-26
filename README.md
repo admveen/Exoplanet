@@ -1,5 +1,6 @@
 Exoplanet Discovery using the Light Curve Transit Method
 ==============================
+###Springboard Capstone 1
 
 Introduction
 ------------
